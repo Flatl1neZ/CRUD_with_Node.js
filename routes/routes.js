@@ -8,8 +8,8 @@ module.exports = router;
 //POST Method
 router.post("/post", async (req, res) => {
   const data = new Model({
-    name: req.body.name,
-    age: req.body.age,
+    email: req.body.email,
+    password: req.body.password,
   });
 
   try {
@@ -44,12 +44,10 @@ router.get("/getOne/:id", async (req, res) => {
 router.patch("/update/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const updatedData = req.body;
-    const options = { new: true };
 
-    const result = await Model.findByIdAndUpdate(id, updatedData, options);
+    const result = await Model.findByIdAndUpdate(id, req.body, { new: true });
 
-    res.send(result);
+    res.status(200).json(result);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
